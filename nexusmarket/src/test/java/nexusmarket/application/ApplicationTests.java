@@ -1,10 +1,10 @@
-package com.nexusmarket.nexusmarket;
+package nexusmarket.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NexusmarketApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

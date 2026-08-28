@@ -1,8 +1,9 @@
+package nexusmarket.application.domain.models;
+
 public abstract class Person {
     private String identification;
-    private String full_name;
+    private String fullName;
     private String email;
     private String role;
     private String state;
-
 }
