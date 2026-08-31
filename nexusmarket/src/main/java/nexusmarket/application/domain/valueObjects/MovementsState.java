@@ -16,6 +16,6 @@ public final class MovementsState {
     public static final MovementsState RESERVATION = new MovementsState("RESERVATION", "Reservado", "Reservado.");
     public static final MovementsState SALE_OUT = new MovementsState("SALE_OUT", "Sale out", "Salida.");
     public static final MovementsState ADJUSMENT = new MovementsState("ADJUSMENT", "Adjustment", "Ajuste.");
-    public static final MovementsState RETURN = new MovementsState("RETURN", "Retornado", "Retornado.");
+    public static final MovementsState RETURN = new MovementsState("RETURN", "Devuelto", "Devuelto.");
 
 }
