@@ -1,6 +1,9 @@
 package nexusmarket.application.domain.models;
 
-public abstract class Warehouse {
-    private String physicAddress;
-    private String storageCapacity;
+public class Warehouse {
+    private Integer id;
+    private Address address;
+    private Integer capacity;
+    private String type;
+    private User supplier;
 }

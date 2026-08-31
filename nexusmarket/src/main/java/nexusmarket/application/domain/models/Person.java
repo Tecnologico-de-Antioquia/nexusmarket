@@ -4,6 +4,5 @@ public abstract class Person {
     private String identification;
     private String fullName;
     private String email;
-    private String role;
     private String state;
 }

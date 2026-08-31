@@ -1,7 +1,7 @@
 package nexusmarket.application.domain.models;
 
-public class Buyer {
-    private String primaryAddres;
-    private String additionalAddress;
+public class Buyer extends Person {
+    private Address primaryAddres;
+    private Address additionalAddress;
     private String comercialState;
 }
