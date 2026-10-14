@@ -1,5 +1,8 @@
 package nexusmarket.application.domain.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import nexusmarket.application.domain.valueObjects.PersonState;
 import nexusmarket.application.domain.valueObjects.RolesType;
 
