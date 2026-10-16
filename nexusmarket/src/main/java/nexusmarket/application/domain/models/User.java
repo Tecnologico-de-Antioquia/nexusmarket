@@ -1,6 +1,7 @@
 package nexusmarket.application.domain.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import nexusmarket.application.domain.valueObjects.PersonState;
@@ -19,28 +20,23 @@ public class User extends Person {
             RolesType role) {
 
         super(
-            id,
-            fullName,
-            email,
-            PersonState.ACTIVE
-        );
+                id,
+                fullName,
+                email,
+                PersonState.ACTIVE);
 
         if (role == null) {
-            throw new IllegalArgumentException(
-                "El rol es obligatorio"
-            );
+            throw new IllegalArgumentException("El rol es obligatorio");
         }
 
         this.role = role;
     }
 
     public void inactivate() {
-        if (getState() == PersonState.INACTIVE) {
-            throw new IllegalStateException(
-                "El usuario ya está bloqueado"
-            );
+        if (getPersonState() == PersonState.INACTIVE) {
+            throw new IllegalStateException("El usuario ya está bloqueado");
         }
 
-        changeState(PersonState.INACTIVE);
+        setPersonState(PersonState.INACTIVE);
     }
 }
