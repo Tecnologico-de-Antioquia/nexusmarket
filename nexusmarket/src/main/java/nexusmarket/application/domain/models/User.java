@@ -17,7 +17,10 @@ public class User extends Person {
             String id,
             String fullName,
             String email,
-            RolesType role) {
+            RolesType role,
+            String username,
+            String password
+        ) {
 
         super(
                 id,
@@ -33,7 +36,7 @@ public class User extends Person {
     }
 
     public void inactivate() {
-        if (getPersonState() == PersonState.INACTIVE) {
+        if (getPersonState() == PersonState.ACTIVE) {
             throw new IllegalStateException("El usuario ya está bloqueado");
         }
 
