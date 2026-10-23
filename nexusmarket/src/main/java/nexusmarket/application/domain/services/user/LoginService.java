@@ -7,6 +7,7 @@ import nexusmarket.application.domain.models.AuthenticationResult;
 import nexusmarket.application.domain.models.User;
 import nexusmarket.application.domain.ports.out.PasswordServicePort;
 import nexusmarket.application.domain.ports.out.UserRepositoryPort;
+import nexusmarket.application.domain.valueObjects.PersonState;
 import nexusmarket.application.domain.exceptions.DomainException;
 import nexusmarket.application.domain.exceptions.InvalidCredentialsException;
 import java.util.Optional;
@@ -36,14 +37,11 @@ public class LoginService {
 
         validateUserStatus(stored);
 
-        return new AuthenticationResult(storedOpt, "");
+        return new AuthenticationResult(stored, "");
     }
 
-    private void validateUserStatus(User stored) {
-        if (UserStatus.BLOCKED.equals(stored.getStatus())) {
-            throw new DomainException("User account is blocked.");
-        }
-        if (UserStatus.INACTIVE.equals(stored.getStatus())) {
+    private void validateUserStatus(User user) {
+        if (user.getPersonState().equals(PersonState.INACTIVE)) {
             throw new DomainException("User account is inactive.");
         }
     }

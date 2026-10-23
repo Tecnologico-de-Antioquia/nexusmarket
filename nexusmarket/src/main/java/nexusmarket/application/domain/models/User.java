@@ -1,7 +1,6 @@
 package nexusmarket.application.domain.models;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import nexusmarket.application.domain.valueObjects.PersonState;
@@ -9,8 +8,10 @@ import nexusmarket.application.domain.valueObjects.RolesType;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class User extends Person {
+
+    private String username;
+    private String password;
     private final RolesType role;
 
     public User(
@@ -31,8 +32,16 @@ public class User extends Person {
         if (role == null) {
             throw new IllegalArgumentException("El rol es obligatorio");
         }
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de usuario es obligatorio");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("La contraseña es obligatoria");
+        }
 
         this.role = role;
+        this.username = username;
+        this.password = password;
     }
 
     public void inactivate() {

@@ -1,4 +1,7 @@
-package nexusmarket.application.domain.services.user;
+package nexusmarket.application.domain.services.car;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

@@ -1,13 +1,10 @@
 package nexusmarket.application.domain.models;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import nexusmarket.application.domain.valueObjects.ComercialState;
 import nexusmarket.application.domain.valueObjects.PersonState;
-import nexusmarket.application.domain.valueObjects.RolesType;
 
 @Getter
-@NoArgsConstructor
 public class Buyer extends Person {
     private Address primaryAddres;
     private Address additionalAddress;
