@@ -21,34 +21,35 @@ public class User extends Person {
             RolesType role,
             String username,
             String password
-        ) {
-
-        super(
-                id,
-                fullName,
-                email,
-                PersonState.ACTIVE);
+    ) {
+        super(id, fullName, email, PersonState.ACTIVE);
 
         if (role == null) {
-            throw new IllegalArgumentException("El rol es obligatorio");
+            throw new IllegalArgumentException("Role is required");
         }
         if (username == null || username.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre de usuario es obligatorio");
+            throw new IllegalArgumentException("Username is required");
         }
         if (password == null || password.trim().isEmpty()) {
-            throw new IllegalArgumentException("La contraseña es obligatoria");
+            throw new IllegalArgumentException("Password is required");
         }
 
         this.role = role;
-        this.username = username;
+        this.username = username.trim();
         this.password = password;
     }
 
-    public void inactivate() {
+    public void activate() {
         if (getPersonState() == PersonState.ACTIVE) {
-            throw new IllegalStateException("El usuario ya está bloqueado");
+            throw new IllegalStateException("User is already active");
         }
+        setPersonState(PersonState.ACTIVE);
+    }
 
+    public void inactivate() {
+        if (getPersonState() == PersonState.INACTIVE) {
+            throw new IllegalStateException("User is already inactive");
+        }
         setPersonState(PersonState.INACTIVE);
     }
 }

@@ -1,9 +1,17 @@
 package nexusmarket.application.domain.services.car;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import nexusmarket.application.domain.models.Car;
+
 @Service
-@RequiredArgsConstructor
-public class DeleteProductFromCarService{
+public class DeleteProductFromCarService {
+
+    public Car deleteItem(Car car, String productId) {
+        if (car == null) {
+            throw new IllegalArgumentException("Cart is required");
+        }
+        car.removeItem(productId);
+        return car;
+    }
 }
