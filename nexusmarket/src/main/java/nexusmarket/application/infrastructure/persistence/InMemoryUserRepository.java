@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import nexusmarket.application.domain.models.User;
@@ -11,6 +12,7 @@ import nexusmarket.application.domain.ports.out.UserRepositoryPort;
 import nexusmarket.application.domain.valueObjects.RolesType;
 
 @Repository
+@Profile("inmemory")
 public class InMemoryUserRepository implements UserRepositoryPort {
 
     private final Map<String, User> users = new ConcurrentHashMap<>();
