@@ -1,22 +1,15 @@
 package nexusmarket.application.domain.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class CartItem {
-    private String productId;
-    private Integer quantity;
 
-    public CartItem(String productId, Integer quantity) {
-        if (productId == null || productId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Product id is required");
-        }
-        if (quantity == null || quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero");
-        }
-        this.productId = productId.trim();
-        this.quantity = quantity;
-    }
+    private String id;
+    private Product product;
+    private Integer quantity;
 }

@@ -8,11 +8,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AuthenticationResult {
+
     private User authenticatedUser;
     private String token;
+    private long expiresIn;
 
-    public AuthenticationResult(User authenticatedUser, String token) {
+    public AuthenticationResult(User authenticatedUser, String token, long expiresIn) {
         this.authenticatedUser = authenticatedUser;
         this.token = token;
+        this.expiresIn = expiresIn;
     }
 }

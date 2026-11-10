@@ -1,17 +1,14 @@
 package nexusmarket.application.domain.services.user;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
-import nexusmarket.application.domain.exceptions.DomainException;
 import nexusmarket.application.domain.exceptions.InvalidCredentialsException;
+import nexusmarket.application.domain.exceptions.UnauthorizedOperationException;
 import nexusmarket.application.domain.models.AuthenticationResult;
 import nexusmarket.application.domain.models.User;
+import nexusmarket.application.domain.ports.out.JwtServicePort;
 import nexusmarket.application.domain.ports.out.PasswordServicePort;
 import nexusmarket.application.domain.ports.out.UserRepositoryPort;
-import nexusmarket.application.domain.valueObjects.PersonState;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -19,29 +16,21 @@ public class LoginService {
 
     private final UserRepositoryPort userRepositoryPort;
     private final PasswordServicePort passwordServicePort;
+    private final JwtServicePort jwtServicePort;
 
     public AuthenticationResult login(User user) {
-        if (user == null) {
+        if (user == null || user.getUsername() == null || user.getPassword() == null) {
             throw new InvalidCredentialsException();
         }
-
-        Optional<User> storedOpt = userRepositoryPort.findByUsername(user);
-        if (storedOpt.isEmpty()) {
-            throw new InvalidCredentialsException();
-        }
-
-        User stored = storedOpt.get();
+        User stored = userRepositoryPort.findByUsername(user.getUsername())
+                .orElseThrow(InvalidCredentialsException::new);
         if (!passwordServicePort.matches(user.getPassword(), stored.getPassword())) {
             throw new InvalidCredentialsException();
         }
-
-        validateUserStatus(stored);
-        return new AuthenticationResult(stored, "token-" + stored.getId());
-    }
-
-    private void validateUserStatus(User user) {
-        if (user.getPersonState() == null || user.getPersonState().equals(PersonState.INACTIVE)) {
-            throw new DomainException("User account is inactive.");
+        if (!stored.isActive()) {
+            throw new UnauthorizedOperationException("El usuario no se encuentra activo.");
         }
+        String token = jwtServicePort.generateToken(stored);
+        return new AuthenticationResult(stored, token, jwtServicePort.getExpirationMs() / 1000);
     }
 }

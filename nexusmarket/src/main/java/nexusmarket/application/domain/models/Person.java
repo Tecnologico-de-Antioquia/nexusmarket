@@ -1,37 +1,37 @@
-
 package nexusmarket.application.domain.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nexusmarket.application.domain.valueObjects.PersonState;
+import nexusmarket.application.domain.valueobjects.SystemRole;
+import nexusmarket.application.domain.valueobjects.UserStatus;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class Person {
 
-    private final String id;
+    private String id;
     private String fullName;
     private String email;
-    private PersonState personState;
+    private String username;
+    private String password;
+    private SystemRole role;
+    private UserStatus state;
 
-    protected Person(
-            String id,
-            String fullName,
-            String email,
-            PersonState personState) {
-
-        if (fullName == null || fullName.trim().equals("")) {
-            throw new IllegalArgumentException("El nombre es obligatorio");
-        }
-
-        if (email == null || email.trim().equals("")) {
-            throw new IllegalArgumentException("El nombre es obligatorio");
-        }
-
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.personState = personState;
+    public void activate() {
+        this.state = UserStatus.ACTIVE;
     }
 
+    public void block() {
+        this.state = UserStatus.BLOCKED;
+    }
+
+    public void inactivate() {
+        this.state = UserStatus.INACTIVE;
+    }
+
+    public boolean isActive() {
+        return UserStatus.ACTIVE.equals(this.state);
+    }
 }

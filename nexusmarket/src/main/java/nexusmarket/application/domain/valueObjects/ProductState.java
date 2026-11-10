@@ -1,19 +1,25 @@
-package nexusmarket.application.domain.valueObjects;
+package nexusmarket.application.domain.valueobjects;
 
-public final class ProductState {
-    private final String code;
-    private final String name;
-    private final String description;
+import java.util.List;
 
+public final class ProductState extends DomainCatalog {
+
+    public static final ProductState PUBLISHED = new ProductState("PUBLISHED", "Publicado", "El producto es visible en el catalogo publico.");
+    public static final ProductState SUSPENDED = new ProductState("SUSPENDED", "Suspendido", "El producto no puede comercializarse temporalmente.");
+    public static final ProductState DISCONTINUED = new ProductState("DISCONTINUED", "Descontinuado", "El producto no volvera a comercializarse.");
 
     private ProductState(String code, String name, String description) {
-        this.code = code;
-        this.name = name;
-        this.description = description;
+        super(code, name, description);
     }
 
-    public static final ProductState PUBLISHED = new ProductState("PUBLISHED", "Publicado", "Producto publicado.");
-    public static final ProductState SUSPENDED = new ProductState("SUSPENDED", "Suspendido", "Producto suspendido.");
-    public static final ProductState DISCONTINUED = new ProductState("DISCONTINUED", "Descontinuado", "Producto descontinuado.");
+    public static List<ProductState> values() {
+        return List.of(PUBLISHED, SUSPENDED, DISCONTINUED);
+    }
 
+    public static ProductState fromCode(String code) {
+        return values().stream()
+                .filter(value -> value.getCode().equalsIgnoreCase(code))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown ProductState code: " + code));
+    }
 }

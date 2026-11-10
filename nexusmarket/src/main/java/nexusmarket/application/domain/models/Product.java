@@ -1,33 +1,28 @@
 package nexusmarket.application.domain.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nexusmarket.application.domain.valueObjects.ProductState;
+import nexusmarket.application.domain.valueobjects.ProductState;
+import nexusmarket.application.domain.valueobjects.ProductType;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class Product {
+
     private String id;
     private String name;
     private String description;
-    private ProductState state;
-    private String sellerId;
+    private java.math.BigDecimal price = java.math.BigDecimal.ZERO;
+    private Seller seller;
+    private ProductState state = ProductState.PUBLISHED;
+    private ProductType productType;
 
-    protected Product(String id, String name, String description, String sellerId) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Product id is required");
+    public void publish() {
+        if (ProductState.DISCONTINUED.equals(state)) {
+            throw new IllegalStateException("Un producto descontinuado no puede publicarse nuevamente.");
         }
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Product name is required");
-        }
-        if (sellerId == null || sellerId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Seller id is required");
-        }
-
-        this.id = id.trim();
-        this.name = name.trim();
-        this.description = description;
-        this.sellerId = sellerId.trim();
         this.state = ProductState.PUBLISHED;
     }
 
@@ -35,11 +30,11 @@ public abstract class Product {
         this.state = ProductState.SUSPENDED;
     }
 
-    public void publish() {
-        this.state = ProductState.PUBLISHED;
-    }
-
     public void discontinue() {
         this.state = ProductState.DISCONTINUED;
+    }
+
+    public boolean isPublished() {
+        return ProductState.PUBLISHED.equals(state);
     }
 }
