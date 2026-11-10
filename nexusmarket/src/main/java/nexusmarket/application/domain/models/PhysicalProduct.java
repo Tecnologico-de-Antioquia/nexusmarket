@@ -13,4 +13,14 @@ public class PhysicalProduct extends Product {
     public PhysicalProduct() {
         setProductType(ProductType.PHYSICAL);
     }
+
+    @Override
+    public boolean requiresShipping() {
+        return true;
+    }
+
+    @Override
+    public boolean requiresInventory() {
+        return true;
+    }
 }

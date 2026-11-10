@@ -14,4 +14,14 @@ public class DigitalProduct extends Product {
     public DigitalProduct() {
         setProductType(ProductType.DIGITAL);
     }
+
+    @Override
+    public boolean requiresShipping() {
+        return false;
+    }
+
+    @Override
+    public boolean requiresInventory() {
+        return false;
+    }
 }

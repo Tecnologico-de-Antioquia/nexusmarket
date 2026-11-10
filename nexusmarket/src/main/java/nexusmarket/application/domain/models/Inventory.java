@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nexusmarket.application.domain.exceptions.InsufficientStockException;
+import nexusmarket.application.domain.exceptions.InvalidInventoryException;
 import nexusmarket.application.domain.valueobjects.InventoryCondition;
 
 @Getter
@@ -75,9 +76,13 @@ public class Inventory {
         this.condition = InventoryCondition.DAMAGED;
     }
 
+    public boolean isDamaged() {
+        return InventoryCondition.DAMAGED.equals(this.condition);
+    }
+
     private void requirePositive(int quantity) {
         if (quantity <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor que cero.");
+            throw new InvalidInventoryException("La cantidad debe ser mayor que cero.");
         }
     }
 }

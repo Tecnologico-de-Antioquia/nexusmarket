@@ -3,7 +3,8 @@ package nexusmarket.application.domain.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nexusmarket.application.domain.exceptions.InvalidStateTransitionException;
+import nexusmarket.application.domain.exceptions.InvalidShipmentException;
+import nexusmarket.application.domain.exceptions.InvalidShipmentStateException;
 import nexusmarket.application.domain.valueobjects.ShipmentState;
 
 @Getter
@@ -18,16 +19,23 @@ public class Shipment {
     private String trackingGuide;
     private ShipmentState state = ShipmentState.PENDING;
 
+    public void assignTrackingGuide(String trackingGuide) {
+        if (trackingGuide == null || trackingGuide.isBlank()) {
+            throw new InvalidShipmentException("La guia de envio es obligatoria.");
+        }
+        this.trackingGuide = trackingGuide;
+    }
+
     public void dispatch() {
         if (!ShipmentState.PENDING.equals(this.state)) {
-            throw new InvalidStateTransitionException("Solo un envio pendiente puede despacharse.");
+            throw new InvalidShipmentStateException("Solo un envio pendiente puede despacharse.");
         }
         this.state = ShipmentState.DISPATCHED;
     }
 
     public void deliver() {
         if (!ShipmentState.DISPATCHED.equals(this.state)) {
-            throw new InvalidStateTransitionException("Solo un envio despachado puede entregarse.");
+            throw new InvalidShipmentStateException("Solo un envio despachado puede entregarse.");
         }
         this.state = ShipmentState.DELIVERED;
     }

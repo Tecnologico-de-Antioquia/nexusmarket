@@ -13,9 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Buyer extends Person {
 
+    private CommercialState commercialState = CommercialState.ACTIVE;
+
     private Address primaryAddress;
     private List<Address> additionalAddresses = new ArrayList<>();
-    private CommercialState commercialState = CommercialState.ACTIVE;
 
     public void addAdditionalAddress(Address address) {
         if (address == null) {
@@ -33,6 +34,6 @@ public class Buyer extends Person {
     }
 
     public boolean canPurchase() {
-        return CommercialState.ACTIVE.equals(this.commercialState) && isActive();
+        return CommercialState.ACTIVE.equals(this.commercialState) && super.isActive();
     }
 }

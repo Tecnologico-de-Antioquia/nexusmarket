@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nexusmarket.application.domain.valueobjects.SystemRole;
-import nexusmarket.application.domain.valueobjects.UserStatus;
 
 @Getter
 @Setter
@@ -14,24 +13,20 @@ public abstract class Person {
     private String id;
     private String fullName;
     private String email;
-    private String username;
-    private String password;
-    private SystemRole role;
-    private UserStatus state;
 
     public void activate() {
-        this.state = UserStatus.ACTIVE;
+        // state moved to User; no-op here
     }
 
     public void block() {
-        this.state = UserStatus.BLOCKED;
+        // state moved to User; no-op here
     }
 
     public void inactivate() {
-        this.state = UserStatus.INACTIVE;
+        // state moved to User; no-op here
     }
 
     public boolean isActive() {
-        return UserStatus.ACTIVE.equals(this.state);
+        return false; // state in User
     }
 }
